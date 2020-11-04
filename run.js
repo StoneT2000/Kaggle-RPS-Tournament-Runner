@@ -1,13 +1,14 @@
 const Dimension = require('dimensions-ai');
+const configs = require('./configs');
 let Tournament = Dimension.Tournament;
 let Logger = Dimension.Logger;
 
-// Setup the halite 4 envionment and integrate with dimensions-ai
+// Setup the rps envionment and integrate with dimensions-ai
 let pathtorunner = "./run.sh";
 let rps = Dimension.Design.createCustom('rps', {
   resultHandler: (res) => {
     try {
-      // we run only one episode, so we take the first element
+      // we run only one match, so we take the first element
       let rewards = JSON.parse(res[0])
       rewards = rewards.map((r, index) => {
         return {
@@ -35,48 +36,35 @@ let rps = Dimension.Design.createCustom('rps', {
 // Create the dimension with the halite 4 environment
 let rpsDimension = Dimension.create(rps, {
   name: 'rps Dimension',
-  observe: false,
-  activateStation: false, // turns off the API
+  observe: configs.activateAPI,
+  activateStation: configs.activateAPI,
   id: 'rps'
 })
 
-/**
- * The participating competitors, add and remove from this list and provide a 
- * path to the file for the agent and a identifying name 
- * e.g { file: "path/to/bot.py", name: "my_name" }
- */ 
-let botlist = [
-  { file: "agents/rock.py", name: "rock only" },
-  { file: "agents/paper.py", name: "paper only" },
-  { file: "agents/random.py", name: "random" }, 
-]
 
 // Create our tournament
-let tourney = rpsDimension.createTournament(botlist, {
+let tourney = rpsDimension.createTournament(configs.botlist, {
   type: Tournament.Type.LADDER,
   id: 'rpsLadder',
   name: 'Your RPS Ladder',
-  // change to Tournament.RankSystemTypes.TRUESKILL for Trueskill ranking
-  // change to Tournament.RankSystemTypes.WINS for ranking by total wins / losses
-  rankSystem: Tournament.RankSystemTypes.ELO, 
+  rankSystem: configs.rankSystem,
   loggingLevel: Logger.LEVEL.WARN,
   consoleDisplay: true,
   defaultMatchConfigs: {
     loggingLevel: Logger.LEVEL.NONE,
-    storeErrorLogs: true // change to false to stop generating error logs from matches
+    storeErrorLogs: configs.storeErrorLogs
   },
   resultHandler: (res) => {
     return {ranks: res.ranks};
   },
   agentsPerMatch: [2],
   tournamentConfigs: {
-    maxConcurrentMatches: 1,
+    maxConcurrentMatches: configs.maxConcurrentMatches,
     storePastResults: false,
 
-    // maxTotalMatches: 100,
+    maxTotalMatches: configs.maxTotalMatches,
 
-    // end after 1 hour = 1 * 60 mins * 60 s * 1000 ms
-    // endDate: new Date((new Date().valueOf() + 1 * 60 * 60 * 1000))
+    endDate: configs.endDate,
   }
 });
 // run the tournament
