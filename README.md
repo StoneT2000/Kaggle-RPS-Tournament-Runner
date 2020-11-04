@@ -18,13 +18,13 @@ node run.js
 
 ![rps-tourney](assets/rps-tourney.gif)
 
-to see a live display of a leaderboard of 4 bots. Sample agents are paper only, rock only, and random agents.
+to see a live display of a leaderboard of 5 agents. Sample agents are paper only, rock only, and random agents.
 
 ## Configuration
 
 You can configure which agents you want to run in the `botlist` variable in `configs.js`
 
-Within the configs variable `configs.js`, you can also change a number of other configurations from ranking system to when you want the tournament to end to max number of matches (1000 episodes each) to run.
+Within the configs variable `configs.js`, you can also change a number of other configurations from ranking system to when you want the tournament to end to max concurrent matches to run. Documentation is in `configs.js`
 
 If you would like to configure the kaggle RPS configurations, see `main.py`, you can change e.g. the episodeSteps configurations.
 

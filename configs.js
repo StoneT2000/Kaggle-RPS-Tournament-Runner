@@ -22,7 +22,7 @@ const configs = {
   // whether or not to store standard error output of each episode
   storeErrorLogs: false,
 
-  // maximum concurrent matches
+  // maximum concurrent matches, recommend to keep below the number of cores your computer has
   maxConcurrentMatches: 4,
 
   // set to a positive number to make tournament stop running after some number of matches / episodes
