@@ -2,7 +2,7 @@
 
 This code allows you to run a local tournament ranking bots you provide by the ELO ranking algorithm (somewhat similar to the current Kaggle leaderboard ranking system), or Trueskill or Total Wins and Losses
 
-Ensure you have [NodeJS](https://nodejs.org/) version 12.x or above installed
+Ensure you have [NodeJS](https://nodejs.org/) version 12.x or above installed. Note that pure Windows does not work, you need WSL, to install, see this https://github.com/KNOXDEV/wsl
 
 To run the tournament, fork this repo or clone it to your computer, and first install the [Dimensions](https://github.com/stonet2000/dimensions) package
 
